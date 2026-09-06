@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <!-- Temporary native visual. Piece IDs belong to this mod; no native item is replaced. -->
+  <CraftedItem id="dragonslayer" name="Dragonslayer [Native Prototype]" crafting_template="dragonslayer_two_handed" is_merchandise="false">
+    <Pieces>
+      <Piece id="dragonslayer_blade" Type="Blade" scale_factor="145" />
+      <Piece id="dragonslayer_guard" Type="Guard" scale_factor="100" />
+      <Piece id="dragonslayer_grip" Type="Handle" scale_factor="120" />
+      <Piece id="dragonslayer_pommel" Type="Pommel" scale_factor="100" />
+    </Pieces>
+  </CraftedItem>
+</Items>

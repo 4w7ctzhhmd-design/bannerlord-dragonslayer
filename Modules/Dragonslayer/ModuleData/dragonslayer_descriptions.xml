@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WeaponDescriptions>
+  <WeaponDescription id="dragonslayer_sword" weapon_class="TwoHandedSword" item_usage_features="twohanded:block:swing:thrust">
+    <WeaponFlags>
+      <WeaponFlag value="MeleeWeapon" />
+      <WeaponFlag value="NotUsableWithOneHand" />
+    </WeaponFlags>
+    <AvailablePieces>
+      <AvailablePiece id="dragonslayer_blade" />
+      <AvailablePiece id="dragonslayer_guard" />
+      <AvailablePiece id="dragonslayer_grip" />
+      <AvailablePiece id="dragonslayer_pommel" />
+    </AvailablePieces>
+  </WeaponDescription>
+</WeaponDescriptions>

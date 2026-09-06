@@ -1,0 +1,56 @@
+{
+  "units": "metres",
+  "axis": "+Z blade, X width, Y thickness",
+  "editorImported": false,
+  "parts": [
+    {
+      "name": "dragonslayer_blade",
+      "dimensions": [
+        0.20999999344348907,
+        0.02800000086426735,
+        0.9890000224113464
+      ],
+      "triangles": 44,
+      "lods": [
+        "dragonslayer_blade.lod1"
+      ]
+    },
+    {
+      "name": "dragonslayer_guard",
+      "dimensions": [
+        0.23000000417232513,
+        0.052000001072883606,
+        0.04780000075697899
+      ],
+      "triangles": 108,
+      "lods": [
+        "dragonslayer_guard.lod1"
+      ]
+    },
+    {
+      "name": "dragonslayer_grip",
+      "dimensions": [
+        0.04899999871850014,
+        0.04899999871850014,
+        0.25
+      ],
+      "triangles": 1968,
+      "lods": [
+        "dragonslayer_grip.lod1",
+        "dragonslayer_grip.lod2"
+      ]
+    },
+    {
+      "name": "dragonslayer_pommel",
+      "dimensions": [
+        0.05999999865889549,
+        0.05000000074505806,
+        0.0544000007212162
+      ],
+      "triangles": 12,
+      "lods": [
+        "dragonslayer_pommel.lod1"
+      ]
+    }
+  ]
+}

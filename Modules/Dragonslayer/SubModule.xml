@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Module>
+  <Name value="Dragonslayer (Native Visual Prototype)" />
+  <Id value="Dragonslayer" />
+  <Version value="v0.1.0" />
+  <SingleplayerModule value="true" />
+  <ModuleCategory value="Singleplayer" />
+  <Official value="false" />
+  <DependedModules>
+    <DependedModule Id="Native" DependentVersion="v1.4.8" Optional="false" />
+    <DependedModule Id="SandBoxCore" DependentVersion="v1.4.8" Optional="false" />
+    <DependedModule Id="Sandbox" DependentVersion="v1.4.8" Optional="false" />
+  </DependedModules>
+  <SubModules>
+    <SubModule>
+      <Name value="Dragonslayer" />
+      <DLLName value="Dragonslayer.dll" />
+      <SubModuleClassType value="Dragonslayer.SubModule" />
+      <Tags>
+        <Tag key="DedicatedServerType" value="none" />
+        <Tag key="IsNoRenderModeElement" value="false" />
+      </Tags>
+    </SubModule>
+  </SubModules>
+  <Xmls>
+    <XmlNode>
+      <XmlName id="GameText" path="dragonslayer_strings" />
+    </XmlNode>
+    <XmlNode>
+      <XmlName id="CraftingPieces" path="dragonslayer_pieces" />
+      <IncludedGameTypes><GameType value="Campaign" /><GameType value="CampaignStoryMode" /><GameType value="EditorGame" /></IncludedGameTypes>
+    </XmlNode>
+    <XmlNode>
+      <XmlName id="WeaponDescriptions" path="dragonslayer_descriptions" />
+      <IncludedGameTypes><GameType value="Campaign" /><GameType value="CampaignStoryMode" /><GameType value="EditorGame" /></IncludedGameTypes>
+    </XmlNode>
+    <XmlNode>
+      <XmlName id="CraftingTemplates" path="dragonslayer_templates" />
+      <IncludedGameTypes><GameType value="Campaign" /><GameType value="CampaignStoryMode" /><GameType value="EditorGame" /></IncludedGameTypes>
+    </XmlNode>
+    <XmlNode>
+      <XmlName id="Items" path="dragonslayer_items" />
+      <IncludedGameTypes><GameType value="Campaign" /><GameType value="CampaignStoryMode" /><GameType value="EditorGame" /></IncludedGameTypes>
+    </XmlNode>
+  </Xmls>
+</Module>

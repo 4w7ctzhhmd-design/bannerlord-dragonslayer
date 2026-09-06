@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CraftingPieces>
+  <!-- Native mesh references verified in v1.4.8 crafting_pieces.xml. Temporary visuals. -->
+  <CraftingPiece id="dragonslayer_blade" name="Dragonslayer slab" tier="5" piece_type="Blade" mesh="battania_blade_1" length="98.9" weight="4.0" full_scale="true" is_hidden="true">
+    <BladeData physics_material="metal_weapon" body_name="bo_sword_one_handed">
+      <Thrust damage_type="Pierce" damage_factor="2.9" />
+      <Swing damage_type="Cut" damage_factor="4.5" />
+    </BladeData>
+    <Materials><Material id="Iron5" count="8" /></Materials>
+  </CraftingPiece>
+  <CraftingPiece id="dragonslayer_guard" name="Dragonslayer guard" tier="5" piece_type="Guard" mesh="battania_guard_9" length="4.78" weight="0.35" is_hidden="true">
+    <BuildData next_piece_offset="1.2" />
+    <Materials><Material id="Iron5" count="1" /></Materials>
+  </CraftingPiece>
+  <CraftingPiece id="dragonslayer_grip" name="Dragonslayer wrapped grip" tier="5" piece_type="Handle" mesh="khuzait_grip_14" length="25" weight="0.35" is_hidden="true">
+    <BuildData piece_offset="-0.09" previous_piece_offset="0" next_piece_offset="0" />
+    <Materials><Material id="Iron3" count="1" /></Materials>
+  </CraftingPiece>
+  <CraftingPiece id="dragonslayer_pommel" name="Dragonslayer pommel" tier="5" piece_type="Pommel" mesh="battania_pommel_9" length="5.44" weight="0.25" is_hidden="true">
+    <BuildData next_piece_offset="0" />
+    <Materials><Material id="Iron4" count="1" /></Materials>
+  </CraftingPiece>
+</CraftingPieces>
