@@ -17,7 +17,8 @@ foreach ($file in $manifest.files) {
     }
 }
 foreach ($path in $paths) { Remove-Item -LiteralPath $path }
-Remove-Item -LiteralPath $marker
+# Unix PowerShell treats the dot-prefixed ownership marker as hidden.
+Remove-Item -LiteralPath $marker -Force
 # Remove empty directories only. Unlisted files are preserved.
 Get-ChildItem -LiteralPath $destination -Directory -Recurse | Sort-Object { $_.FullName.Length } -Descending | ForEach-Object {
     Assert-NoLink $_.FullName
