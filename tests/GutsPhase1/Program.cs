@@ -35,3 +35,29 @@ bool invalid = false;
 try { DragonslayerConfig.Parse(unknown.DocumentElement); } catch (FormatException) { invalid = true; }
 Check("Reject typo", invalid);
 Console.WriteLine("PASS: 18 configuration/wielder cases; no game engine executed.");
+// Exercise the REAL IsWielder and event lifecycle against throwing agent doubles.
+typeof(DragonslayerConfig).GetProperty("Current", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
+    .SetValue(null, defaults);
+defaults.DebugLogging = false;
+var controller = new DragonslayerWielderController();
+var mission = new TaleWorlds.MountAndBlade.Mission { Behavior = controller };
+var horse = new TaleWorlds.MountAndBlade.Agent { IsHuman = false, Mission = mission };
+Check("Horse initialization does not read weapon", !DragonslayerWielderController.IsWielder(horse) && horse.WeaponReads == 0);
+var human = new TaleWorlds.MountAndBlade.Agent { IsHuman = true, Mission = mission };
+Check("Null equipment excluded", !DragonslayerWielderController.IsWielder(human) && human.WeaponReads == 0);
+human.Equipment = new object();
+Check("Before OnAgentBuild excluded", !DragonslayerWielderController.IsWielder(human) && human.WeaponReads == 0);
+human.RejectWeaponRead = false; human.WeaponId = "dragonslayer";
+controller.OnAgentBuild(human, null);
+Check("Built wielder activates", DragonslayerWielderController.IsWielder(human));
+human.WeaponId = null; human.OnAgentWieldedItemChange();
+Check("Sheath removes powers", !DragonslayerWielderController.IsWielder(human));
+human.Active = false; human.RejectWeaponRead = true;
+int reads = human.WeaponReads;
+Check("Dead agent never reads weapon", !DragonslayerWielderController.IsWielder(human) && human.WeaponReads == reads);
+controller.OnAgentDeleted(human);
+human.Active = true;
+Check("Deleted agent excluded", !DragonslayerWielderController.IsWielder(human) && human.WeaponReads == reads);
+Check("Event subscriptions released", human.OnAgentWieldedItemChange == null && human.OnAgentMountedStateChanged == null);
+controller.OnRemoveBehavior();
+Console.WriteLine("PASS: 8 production controller lifecycle regression cases using test doubles.");

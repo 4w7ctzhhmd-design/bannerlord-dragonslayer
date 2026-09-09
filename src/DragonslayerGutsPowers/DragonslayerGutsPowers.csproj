@@ -4,7 +4,7 @@
     <LangVersion>9.0</LangVersion>
     <AssemblyName>DragonslayerGutsPowers</AssemblyName>
     <RootNamespace>DragonslayerGutsPowers</RootNamespace>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Deterministic>true</Deterministic>
     <AutomaticallyUseReferenceAssemblyPackages>false</AutomaticallyUseReferenceAssemblyPackages>
     <GameConfiguration Condition="'$(GameConfiguration)' == ''">Win64_Shipping_Client</GameConfiguration>

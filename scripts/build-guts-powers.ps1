@@ -22,7 +22,7 @@ $files = @(Get-ChildItem $module -File -Recurse | ForEach-Object {
 })
 @{module='DragonslayerGutsPowers';target='v1.4.8';files=$files} | ConvertTo-Json -Depth 5 | Set-Content "$module/.dragonslayer-install.json"
 Copy-Item "$script:RepoRoot/docs/GUTS_POWERS.md" "$out/README.md"
-$zip = "$script:RepoRoot/artifacts/DragonslayerGutsPowers-0.1.0-v1.4.8.zip"
+$zip = "$script:RepoRoot/artifacts/DragonslayerGutsPowers-0.1.1-v1.4.8.zip"
 Compress-Archive -Path "$out/Modules","$out/README.md" -DestinationPath $zip -Force
 # Validate the archive itself, including the ownership marker required for removal.
 $check = Join-Path $out 'archive-check'

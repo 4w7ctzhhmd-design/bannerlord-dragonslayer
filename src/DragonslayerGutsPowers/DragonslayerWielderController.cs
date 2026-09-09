@@ -14,7 +14,13 @@ namespace DragonslayerGutsPowers
         internal static bool IsWielder(Agent agent)
         {
             var c = DragonslayerConfig.Current;
-            return agent != null && WielderPolicy.Eligible(c.EnableGutsPowers, agent.IsHuman,
+            // Native models run during Agent.Build, including horse creation, before
+            // wield indices/equipment are ready. Do not eagerly evaluate WieldedWeapon.
+            if (!c.EnableGutsPowers || agent == null || !agent.IsHuman || agent.Equipment == null) return false;
+            var controller = agent.Mission?.GetMissionBehavior<DragonslayerWielderController>();
+            if (controller == null || !controller.subscriptions.ContainsKey(agent)) return false;
+            if (!agent.IsActive() || (c.PlayerOnly && !agent.IsPlayerControlled) || GameNetwork.IsSessionActive) return false;
+            return WielderPolicy.Eligible(c.EnableGutsPowers, agent.IsHuman,
                 agent.IsActive(), c.PlayerOnly, agent.IsPlayerControlled, GameNetwork.IsSessionActive,
                 agent.WieldedWeapon.Item?.StringId);
         }

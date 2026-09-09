@@ -1,4 +1,4 @@
-# Dragonslayer Guts Powers — Phase 1, version 0.1.0
+# Dragonslayer Guts Powers — Phase 1, version 0.1.1
 
 Optional companion to the working **Dragonslayer 0.1.1** on Bannerlord **v1.4.8.119303**. The verified item ID is `dragonslayer`. Neither its assets, item definitions, grant command, base stats nor the separate Instant Kill module are rewritten. The standalone source tag/archive remain available.
 
@@ -52,6 +52,8 @@ Swing/handling multipliers are the stable Phase 1 approximation for managing the
 Phases 2–6 (cleave, rage, Berserker Mode, injury costs, last stand, fear, projectile defense and cosmetics/UI) are not implemented. There are no placeholder config switches claiming those features work. Future systems can consume the shared detection/config architecture.
 
 ## How to test Phase 1
+
+Version 0.1.1 fixes a town-entry crash found in the user's process 66416 dump: `Agent.WieldedWeapon` was accessed during horse initialization via the stat model. Detection now rejects non-human agents, missing equipment, agents not yet reported by `OnAgentBuild`, and inactive agents before reading wield state. Regression tests invoke the production controller with throwing test doubles to check this ordering and cleanup. After updating, retry entering Marunath's town center first, then another town and a mounted battle. This fix has not yet been confirmed in-game.
 
 All new gameplay behavior is pending user testing. Disable Instant Kill first. Use a separate campaign save and official modules + Dragonslayer + Guts Powers.
 
