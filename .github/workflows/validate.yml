@@ -1,0 +1,25 @@
+name: Source validation (no game compilation)
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate XML and module references
+        shell: pwsh
+        run: ./scripts/validate.ps1
+      - name: Test install safety and negative validation cases
+        shell: pwsh
+        run: ./scripts/test.ps1
+      - name: Check asset source syntax
+        run: python -m py_compile assets/generate_sword.py assets/verify_exports.py
+      - name: Verify original published asset integrity
+        shell: pwsh
+        run: ./scripts/validate-assets.ps1
+      - name: Reject proprietary binaries
+        shell: pwsh
+        run: |
+          $bad = git ls-files | Where-Object { $_ -match '(?i)(TaleWorlds.*\.dll|\.sav$|local.settings.json$|\.env$)' }
+          if ($bad) { throw "Forbidden tracked files: $bad" }

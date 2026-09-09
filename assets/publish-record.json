@@ -1,0 +1,52 @@
+{
+  "editorVersion": "v1.4.8.119303",
+  "publishedOn": "2026-09-06",
+  "target": "Client",
+  "module": "Dragonslayer",
+  "shader": "pbr_metallic",
+  "texturePresets": {
+    "dragonslayer_albedo": "Albedo",
+    "dragonslayer_specular": "Specular",
+    "dragonslayer_normal": "Normal"
+  },
+  "editorBladePreviewChecked": true,
+  "assembledWeaponInGameChecked": false,
+  "files": [
+    {
+      "path": "SubModule.xml",
+      "sha256": "04E77E7B5C7DD88AD7FD321E7C3876A37ECD8CC8FAD53A75701A2251EFCF4BD1"
+    },
+    {
+      "path": "AssetPackages/pack0.tpac",
+      "sha256": "6E6320D3560ABDCC949737D28DF46F002486910BF28CFE134E508099968D5AC7"
+    },
+    {
+      "path": "RuntimeDataCache/29D6A5E3-2CD5-444A-B952-5C3785CF0298.rdc",
+      "sha256": "F54A8FA59A9E0F1B0A9C46DE36F1090AB7211F33DE6D6C745B878B1D90CE1C06"
+    },
+    {
+      "path": "RuntimeDataCache/6C2C7040-3CC0-42AE-A050-46735A0B43F5.rdc",
+      "sha256": "67EB9FCEC8E7B5E030C2F827DA5E9B2EE27F57610FB86D41D60190D4EDDD352B"
+    },
+    {
+      "path": "RuntimeDataCache/9A39C95F-120B-4230-9B7E-FA863032A41A.rdc",
+      "sha256": "F7AAE41EECAF72F22EFD339C69B1D272AAAD9756EA135EAE8A0456EEB66DE572"
+    },
+    {
+      "path": "RuntimeDataCache/A3B6AF98-6C36-4668-ADB8-169341EFBA77.rdc",
+      "sha256": "3764E0ED3C025020547CC6B165B6502F462DEC3FBB1F78809B6EED8D539F2644"
+    },
+    {
+      "path": "RuntimeDataCache/C6E0B91F-B6EB-4AD9-9F8E-BEABAE5B27FD.rdc",
+      "sha256": "DA8FA707C7DD9C49BFBEFE6FB049CBC7A12DF5297E1B1AA413CD638CC7FE88AC"
+    },
+    {
+      "path": "RuntimeDataCache/DDAC1DCC-D639-469B-968A-117DA1ADC5FE.rdc",
+      "sha256": "09626F2D45802FBDACDB9DDC7B8C37828EDAC643DD124D988D2D5DD95AA4DD1B"
+    },
+    {
+      "path": "RuntimeDataCache/F53732DC-E5CE-49D1-91F8-FD495AA5E755.rdc",
+      "sha256": "73D829BCE233EC7D1EB1CC49021510D6F66E8F756FB77D3AC0D3087D6222546A"
+    }
+  ]
+}

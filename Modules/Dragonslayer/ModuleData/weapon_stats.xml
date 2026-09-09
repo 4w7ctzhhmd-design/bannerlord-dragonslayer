@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mod-owned configuration, not a TaleWorlds XML type. See README for ranges and units. -->
+<DragonslayerStats swingDamage="180" thrustDamage="65" swingSpeed="58" thrustSpeed="55" handling="45" />
