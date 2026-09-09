@@ -2,7 +2,7 @@
 
 An original Berserk-inspired sword mod for **Bannerlord v1.4.8.119303**, Windows Steam build **24573425**. Single-player only; multiplayer and co-op are untested and unsupported.
 
-**Development build:** the installable prototype uses a labelled native sword visual. Original custom meshes, textures, FBXs and Blender source are included under `assets/source`; these are not yet published Bannerlord assets. See [asset import](docs/ASSET_IMPORT.md) and [verification](docs/VERIFICATION.md) for status. Unofficial fan project, not affiliated with TaleWorlds or the owners of Berserk.
+**Deployable test build:** the default package includes the original custom sword meshes and textures, imported and Client-published with the matching Bannerlord editor. Client and editor DLLs compile against the installed game. All in-game testing is pending user feedback; this is not a gameplay-verified release. See [how to test](#how-to-test) and the [verification record](docs/VERIFICATION.md). Unofficial fan project, not affiliated with TaleWorlds or the owners of Berserk.
 
 ![Original source render, not an in-game screenshot](assets/source/preview.png)
 
@@ -18,7 +18,7 @@ An original Berserk-inspired sword mod for **Bannerlord v1.4.8.119303**, Windows
 
 To play: the exact game version above, with Native, SandBox Core and Sandbox enabled. StoryMode is optional. No DLC or third-party mod dependency. Test first with only official modules and Dragonslayer.
 
-To build: **PowerShell 7+**, .NET SDK **8 or 9**, local game client DLLs and the game's bundled `mono/lib/mono/4.7.2-api` reference assemblies. Blender **4.3.2** regenerates the included art. Matching Bannerlord Modding Kit **v1.4.8** is needed for custom asset import/client publishing.
+To build: **PowerShell 7+**, .NET SDK **8 or 9**, local game client DLLs and the game's bundled `mono/lib/mono/4.7.2-api` reference assemblies. The original published assets are included, so rebuilding requires no editor import. Blender **4.3.2** and matching Modding Kit **v1.4.8** are needed only to change and republish the art. Neither build tools nor the Modding Kit are needed to install the ZIP.
 
 Run from the repository root:
 
@@ -26,18 +26,19 @@ Run from the repository root:
 ./scripts/validate.ps1     # Portable source validation only
 ./scripts/test.ps1         # Negative cases and installer safety
 ./scripts/build.ps1        # Detect game, native XSD checks, compile, package
+./scripts/validate-package.ps1 # Extract and check the final custom ZIP
 ./scripts/install.ps1      # Install the latest build
 ```
 
 Game detection reads Steam library folders. Override with `-GamePath 'X:/Games/Mount & Blade II Bannerlord'`, environment variable `BANNERLORD_GAME_PATH`, or ignored `local.settings.json` containing `{"gamePath":"X:/Games/Mount & Blade II Bannerlord"}`. Builds and installation check installed module versions against `target-game.json`. Future game updates need an API/schema review and retarget.
 
-Builds go to `artifacts/build-<id>/Modules/Dragonslayer`; the ZIP is `artifacts/Dragonslayer-0.1.0-Prototype-v1.4.8.zip`. Only this mod's DLLs, XML, installation hash manifest and documentation are packaged. Matching editor references trigger a second compilation and include `bin/Win64_Shipping_wEditor/Dragonslayer.dll`; the normal client uses its own `Win64_Shipping_Client` DLL. Game assemblies have `Private=false` and are never copied into source control or ZIPs. The source `Modules/Dragonslayer` folder is not itself compiled.
+Builds go to `artifacts/build-<id>/Modules/Dragonslayer`; the default ZIP is **`artifacts/Dragonslayer-0.1.0-Custom-v1.4.8.zip`**. It includes mod DLLs, XML, original published assets/runtime data, installation hash manifest, documentation and source preview. Matching editor references trigger a second compilation and include `bin/Win64_Shipping_wEditor/Dragonslayer.dll`; the normal client uses its own `Win64_Shipping_Client` DLL. Game assemblies have `Private=false` and are never copied into source control or ZIPs. The source `Modules/Dragonslayer` folder is not itself compiled. `-Visual Prototype` explicitly builds the temporary native visual for troubleshooting.
 
-CI is **Source validation (no game compilation)**: XML relationships, configuration ranges, installer safety and asset script syntax. It has no game references and does not compile the DLL, validate against native XSDs, or run Bannerlord. A green workflow is not a full mod build.
+CI is **Source validation (no game compilation)**: XML relationships, configuration ranges, installer safety, asset script syntax and published asset checksums. It has no game references and does not compile the DLL, validate against native XSDs, or run Bannerlord. A green workflow is not a full mod build.
 
 ## Installation and removal
 
-Close the game/editor, then run `./scripts/install.ps1`. Alternatively extract the ZIP's `Modules/Dragonslayer` folder into the game's `Modules` directory. Restart the launcher and enable Dragonslayer after Sandbox, preserving the normal official module order. Module/item names say **Native Prototype** until the custom build is imported and published.
+Close the game/editor, then run `./scripts/install.ps1`. Alternatively extract the ZIP and copy its `Modules/Dragonslayer` folder into the game's `Modules` directory. The resulting path must be `Modules/Dragonslayer/SubModule.xml`, with no extra nested Dragonslayer folder. Restart the normal game launcher and enable **Dragonslayer (Custom Visual; Test Build)** after Sandbox, preserving the normal official module order. Do not overlay an existing installation: back up and remove only the previous Dragonslayer folder first.
 
 The installer refuses an existing Dragonslayer folder. For a managed update:
 
@@ -49,14 +50,22 @@ The installer refuses an existing Dragonslayer folder. For a managed update:
 
 Uninstall checks hashes before removing listed files. It refuses edited files and preserves unlisted files, unrelated modules and all saves. Back up configuration edits and restore the originals before scripted removal. Manual uninstall means removing only `Modules/Dragonslayer`. Use a separate test save: removing an item mod while its items remain in a save can cause missing-item behaviour. Scripts never read or change saves.
 
-## Obtain for testing
+## How to test
 
-1. Start/load a single-player campaign and return to the campaign map.
+All gameplay checks below are **pending**. Use the normal game client, not the Modding Kit. Start with official modules plus Dragonslayer and a new or separate single-player test save; keep your main campaign untouched.
+
+1. **Startup:** enable Dragonslayer in the launcher. Reach the main menu and start/load your test campaign. Record any dependency, XML or DLL error verbatim.
 2. Open the built-in console with **Alt + `** (the key above Tab on a US keyboard).
-3. Run `dragonslayer.give` with no arguments. Each call deliberately adds **one** sword to the main party inventory.
-4. Open inventory (**I**), find **Dragonslayer [Native Prototype]**, and equip it. Run `dragonslayer.status` to inspect registered stats.
+3. **Obtain:** on the campaign map, run `dragonslayer.give` with no arguments. Each call should add **one** sword. Run `dragonslayer.status` and save its output for your feedback.
+4. **Inventory:** close the console, press **I**, and find **Dragonslayer**. Check the thumbnail for the broad dark slab, contrasting edges and wrapped grip. Expected base stats: **180 cutting, 65 piercing, swing/thrust speeds 58/55, handling 45**. Record the reported weight and reach; these are calculated by native crafting and await runtime confirmation.
+5. **Equip:** put it in a weapon slot and enter a battle or village scene. Check drawing/sheathing, both hands on the grip and the blade's orientation. Test with a shield carried: the sword should retain its two-handed usage.
+6. **Combat:** try left/right/overhead swings, thrusts and blocks. Check the slower handling, visible hit reactions and normal two-handed animations. Compare reach and damage against a native two-hander using similar targets/armour; damage is affected by skills, armour and movement, so 180 is not guaranteed health loss.
+7. **Appearance/clipping:** inspect both blade faces, hands, guard and pommel; check the back when sheathed, armour/cloaks, mounted use, close camera views and distant LODs. Check whether hits match the visible blade and whether dropping/picking up preserves the item.
+8. **Save/load:** save the test campaign with the sword equipped, exit the game, restart and reload. Verify the sword and stats persist without an extra automatic grant.
 
-This mod-owned command needs no additional console mod or global cheat-mode setting. It does not automatically grant items. Merchant stock is disabled; shops are not the test path. Runtime command discovery and inventory granting still need verification.
+The mod-owned grant command is implemented without an additional console mod or a cheat-mode check. Runtime command discovery and granting still need your verification. Merchant stock is disabled; use the command rather than searching shops.
+
+**Send feedback:** list pass/fail for the steps above, your exact game version and enabled modules, the `dragonslayer.status` output, and short reproduction steps for each failure. Include a screenshot for visual problems and the relevant timestamped lines from `%LOCALAPPDATA%/Dragonslayer/Logs/Dragonslayer.log`. For startup/crashes, also include the error text and relevant excerpt from the newest `%PROGRAMDATA%/Mount and Blade II Bannerlord/logs/rgl_log_*`. You do not need to send saves or unrelated personal logs. I will inspect the failure, fix what can be reproduced and supply a rebuilt package.
 
 ## Configuration
 
@@ -105,7 +114,7 @@ Report the action, exact version, prototype/custom variant, enabled modules and 
 
 Creates four centred crafting-part FBXs with LODs/UVs, packed `.blend`, 512×512 PBR textures and a source-only preview. The `pbr_metallic` specular texture packs R=metallic, G=glossiness, B=AO, A=0. The flat normal map is intentional: bevels and wrapping are geometry. No external artwork or extracted game assets are included.
 
-Follow [editor import and publishing](docs/ASSET_IMPORT.md), then build with actual published client TPACs:
+The default build uses the checked-in original client assets in `assets/published`, with checksums in `assets/publish-record.json`. Imported editor metadata is preserved in `assets/bannerlord/Assets`. To change the art, follow [editor import and publishing](docs/ASSET_IMPORT.md), then build with your new client output:
 
 ```powershell
 ./scripts/build.ps1 -Visual Custom -PublishedModule 'X:/EditorPublish/Dragonslayer'

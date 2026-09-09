@@ -1,0 +1,7 @@
+# Preserve editor-published bytes for the provenance checksum checks on all hosts.
+assets/published/** -text
+*.tpac binary
+*.rdc binary
+*.fbx binary
+*.blend binary
+*.png binary

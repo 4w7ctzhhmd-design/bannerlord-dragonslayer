@@ -1,4 +1,4 @@
-param([string]$GamePath, [ValidateSet('Prototype','Custom')][string]$Visual = 'Prototype', [string]$PublishedModule)
+param([string]$GamePath, [ValidateSet('Prototype','Custom')][string]$Visual = 'Custom', [string]$PublishedModule)
 . "$PSScriptRoot/common.ps1"
 $game = Find-Game $GamePath
 & "$PSScriptRoot/validate.ps1" -GamePath $game
@@ -19,7 +19,10 @@ if (Test-Path $editorVersionPath) {
     Copy-Item "$script:RepoRoot/src/Dragonslayer/bin/Editor/Dragonslayer.dll" "$module/bin/Win64_Shipping_wEditor"
 }
 if ($Visual -eq 'Custom') {
-    if (!$PublishedModule) { throw 'Custom build requires -PublishedModule from the editor Client publish operation. See docs/ASSET_IMPORT.md.' }
+    if (!$PublishedModule) {
+        & "$PSScriptRoot/validate-assets.ps1"
+        $PublishedModule = Join-Path $script:RepoRoot 'assets/published'
+    }
     $published = (Resolve-Path -LiteralPath $PublishedModule).Path
     if ((Read-Xml (Join-Path $published 'SubModule.xml')).Module.Id.value -cne 'Dragonslayer') { throw 'Published module must identify itself as Dragonslayer.' }
     $packages = @(Get-ChildItem (Join-Path $published 'AssetPackages') -Filter '*.tpac' -File -Recurse)
@@ -27,6 +30,10 @@ if ($Visual -eq 'Custom') {
     Assert-NoLink $published
     foreach ($file in Get-ChildItem $published -Recurse -Force) { Assert-NoLink $file.FullName }
     Copy-Item (Join-Path $published 'AssetPackages') $module -Recurse
+    # Preserve runtime data emitted by the matching editor alongside its client pack.
+    if (Test-Path (Join-Path $published 'RuntimeDataCache')) {
+        Copy-Item (Join-Path $published 'RuntimeDataCache') $module -Recurse
+    }
     $pieces = Read-Xml "$module/ModuleData/dragonslayer_pieces.xml"
     foreach ($piece in $pieces.CraftingPieces.CraftingPiece) { $piece.mesh = $piece.id }
     $pieces.Save("$module/ModuleData/dragonslayer_pieces.xml")
@@ -46,7 +53,9 @@ $outDir = Join-Path $script:RepoRoot 'artifacts'
 $zip = Join-Path $outDir "Dragonslayer-0.1.0-$Visual-v1.4.8.zip"
 Copy-Item "$script:RepoRoot/README.md" $output
 Copy-Item "$script:RepoRoot/docs" $output -Recurse
-Compress-Archive -Path "$output/Modules","$output/README.md","$output/docs" -DestinationPath $zip -Force
+New-Item -ItemType Directory "$output/assets/source" -Force | Out-Null
+Copy-Item "$script:RepoRoot/assets/source/preview.png" "$output/assets/source"
+Compress-Archive -Path "$output/Modules","$output/README.md","$output/docs","$output/assets" -DestinationPath $zip -Force
 Set-Content "$outDir/latest-build.txt" $module
 Write-Host "BUILD: $module"
 Write-Host "PACKAGE: $zip"

@@ -15,6 +15,9 @@ jobs:
         run: ./scripts/test.ps1
       - name: Check asset source syntax
         run: python -m py_compile assets/generate_sword.py assets/verify_exports.py
+      - name: Verify original published asset integrity
+        shell: pwsh
+        run: ./scripts/validate-assets.ps1
       - name: Reject proprietary binaries
         shell: pwsh
         run: |
