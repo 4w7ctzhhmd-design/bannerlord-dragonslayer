@@ -64,4 +64,10 @@ Expect-Failure { & "$PSScriptRoot/install.ps1" -GamePath $fixture -ModulePath $p
 & "$PSScriptRoot/uninstall.ps1" -GamePath $fixture -ModuleId DragonslayerInstantKill
 if (!(Test-Path "$installed/unrelated.txt")) { throw 'Add-on uninstall modified the base mod.' }
 Write-Host 'PASS: add-on identity isolation and base mod preservation.'
+$manifest.module = 'DragonslayerGutsPowers'
+$manifest | ConvertTo-Json -Depth 4 | Set-Content "$payload/.dragonslayer-install.json"
+& "$PSScriptRoot/install.ps1" -GamePath $fixture -ModulePath $payload -ModuleId DragonslayerGutsPowers
+& "$PSScriptRoot/uninstall.ps1" -GamePath $fixture -ModuleId DragonslayerGutsPowers
+if (!(Test-Path "$installed/unrelated.txt")) { throw 'Guts uninstall modified the base mod.' }
+Write-Host 'PASS: Guts Powers module isolation.'
 Write-Host "Test fixtures retained in $temp"

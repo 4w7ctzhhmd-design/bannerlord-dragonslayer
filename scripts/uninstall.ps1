@@ -1,4 +1,4 @@
-param([string]$GamePath, [ValidateSet('Dragonslayer','DragonslayerInstantKill')][string]$ModuleId = 'Dragonslayer')
+param([string]$GamePath, [ValidateSet('Dragonslayer','DragonslayerInstantKill','DragonslayerGutsPowers')][string]$ModuleId = 'Dragonslayer')
 . "$PSScriptRoot/common.ps1"
 $game = Find-Game $GamePath
 $destination = [IO.Path]::GetFullPath((Join-Path $game "Modules/$ModuleId"))

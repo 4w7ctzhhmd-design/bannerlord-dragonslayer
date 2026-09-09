@@ -1,8 +1,8 @@
-param([string]$GamePath, [string]$ModulePath, [ValidateSet('Dragonslayer','DragonslayerInstantKill')][string]$ModuleId = 'Dragonslayer')
+param([string]$GamePath, [string]$ModulePath, [ValidateSet('Dragonslayer','DragonslayerInstantKill','DragonslayerGutsPowers')][string]$ModuleId = 'Dragonslayer')
 . "$PSScriptRoot/common.ps1"
 $game = Find-Game $GamePath
 if (!$ModulePath) {
-    $latest = if ($ModuleId -eq 'Dragonslayer') { 'latest-build.txt' } else { 'latest-instant-kill.txt' }
+    $latest = if ($ModuleId -eq 'Dragonslayer') { 'latest-build.txt' } elseif ($ModuleId -eq 'DragonslayerInstantKill') { 'latest-instant-kill.txt' } else { 'latest-guts-powers.txt' }
     $ModulePath = (Get-Content "$script:RepoRoot/artifacts/$latest" -Raw).Trim()
 }
 $source = (Resolve-Path -LiteralPath $ModulePath).Path
