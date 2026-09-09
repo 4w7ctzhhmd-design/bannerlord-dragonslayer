@@ -32,7 +32,7 @@ Run from the repository root:
 
 Game detection reads Steam library folders. Override with `-GamePath 'X:/Games/Mount & Blade II Bannerlord'`, environment variable `BANNERLORD_GAME_PATH`, or ignored `local.settings.json` containing `{"gamePath":"X:/Games/Mount & Blade II Bannerlord"}`. Builds and installation check installed module versions against `target-game.json`. Future game updates need an API/schema review and retarget.
 
-Builds go to `artifacts/build-<id>/Modules/Dragonslayer`; the default ZIP is **`artifacts/Dragonslayer-0.1.0-Custom-v1.4.8.zip`**. It includes mod DLLs, XML, original published assets/runtime data, installation hash manifest, documentation and source preview. Matching editor references trigger a second compilation and include `bin/Win64_Shipping_wEditor/Dragonslayer.dll`; the normal client uses its own `Win64_Shipping_Client` DLL. Game assemblies have `Private=false` and are never copied into source control or ZIPs. The source `Modules/Dragonslayer` folder is not itself compiled. `-Visual Prototype` explicitly builds the temporary native visual for troubleshooting.
+Builds go to `artifacts/build-<id>/Modules/Dragonslayer`; the default ZIP is **`artifacts/Dragonslayer-0.1.1-Custom-v1.4.8.zip`**. It includes mod DLLs, XML, original published assets/runtime data, installation hash manifest, documentation and source preview. Matching editor references trigger a second compilation and include `bin/Win64_Shipping_wEditor/Dragonslayer.dll`; the normal client uses its own `Win64_Shipping_Client` DLL. Game assemblies have `Private=false` and are never copied into source control or ZIPs. The source `Modules/Dragonslayer` folder is not itself compiled. `-Visual Prototype` explicitly builds the temporary native visual for troubleshooting.
 
 CI is **Source validation (no game compilation)**: XML relationships, configuration ranges, installer safety, asset script syntax and published asset checksums. It has no game references and does not compile the DLL, validate against native XSDs, or run Bannerlord. A green workflow is not a full mod build.
 
@@ -51,6 +51,8 @@ The installer refuses an existing Dragonslayer folder. For a managed update:
 Uninstall checks hashes before removing listed files. It refuses edited files and preserves unlisted files, unrelated modules and all saves. Back up configuration edits and restore the originals before scripted removal. Manual uninstall means removing only `Modules/Dragonslayer`. Use a separate test save: removing an item mod while its items remain in a save can cause missing-item behaviour. Scripts never read or change saves.
 
 ## How to test
+
+**0.1.1 crash fix:** fixes new-campaign smithing-order generation failing with `Sequence contains no matching element`. The private template's four pieces must be visible to native smithing/order selection; they can now appear in that system. The fixed grant item still uses its configured stats; other smithing-generated items use native crafting stats. After updating, first retry creating a new test campaign. The earlier 0.1.0 build should no longer be used.
 
 All gameplay checks below are **pending**. Use the normal game client, not the Modding Kit. Start with official modules plus Dragonslayer and a new or separate single-player test save; keep your main campaign untouched.
 

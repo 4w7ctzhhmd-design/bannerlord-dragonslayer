@@ -50,7 +50,7 @@ $files = @(Get-ChildItem $module -Recurse -File | ForEach-Object {
 })
 @{ module = 'Dragonslayer'; target = (Get-Content "$script:RepoRoot/target-game.json" -Raw | ConvertFrom-Json).version; visual = $Visual; files = $files } | ConvertTo-Json -Depth 5 | Set-Content "$module/.dragonslayer-install.json"
 $outDir = Join-Path $script:RepoRoot 'artifacts'
-$zip = Join-Path $outDir "Dragonslayer-0.1.0-$Visual-v1.4.8.zip"
+$zip = Join-Path $outDir "Dragonslayer-0.1.1-$Visual-v1.4.8.zip"
 Copy-Item "$script:RepoRoot/README.md" $output
 Copy-Item "$script:RepoRoot/docs" $output -Recurse
 New-Item -ItemType Directory "$output/assets/source" -Force | Out-Null

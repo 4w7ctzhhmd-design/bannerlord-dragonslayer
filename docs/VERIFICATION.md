@@ -19,6 +19,12 @@ Target: **v1.4.8.119303**, Steam build **24573425**, editor **v1.4.8**. See `tar
 
 ## Pending runtime verification
 
+### 0.1.1 new-campaign crash fix
+
+The user's 2026-09-09 crash dump for process 56036 contains `System.InvalidOperationException: Sequence contains no matching element` in `CraftingCampaignBehavior.GetWeaponPieces`, called by `CreateTownOrder` during new-game initialization. Local inspection of the installed implementation confirmed every crafting template can be randomly selected; its final fallback requires a non-hidden piece of each represented type. All four Dragonslayer pieces were hidden. Version 0.1.1 sets them visible, and a negative regression test now rejects hiding the only eligible piece. The dump was analyzed locally and is not committed or uploaded. Gameplay confirmation of the fix remains pending user retest.
+
+The user's mod log confirmed successful item registration and configured stats before the crash: weight 13.21 kg, reach 162 cm, swing 180 Cut, thrust 65 Pierce, speeds 58/55, handling 45. No grant or combat success is inferred from that log.
+
 During the first editor session, exiting the empty default scene triggered a native assertion at `rglIntrusive_ptr.h:151`, `px != nullptr`, after scene finalization. The process was stopped and restarted. The trace does not establish a mod-specific cause; successful assembly loading is not evidence that editor shutdown or gameplay passed.
 
 The shutdown assertion recurred after the successful client publish. Its cause remains unresolved. The normal game has **not** been played to verify this mod. Custom assets are imported/published and included in a deployable test package; resource linkage in a campaign, assembled visuals and gameplay are not yet verified. Per the user's request, all in-game testing is left to the user using the README's How to test section.

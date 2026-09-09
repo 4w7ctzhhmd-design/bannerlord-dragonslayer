@@ -37,6 +37,12 @@ foreach ($piece in $pieces) {
     if ([double]$piece.weight -le 0 -or [double]$piece.weight -gt 10) { throw 'Piece weight outside supported (0,10] kg.' }
     if ($piece.id -notin $template.UsablePieces.UsablePiece.piece_id) { throw 'Piece unavailable in template.' }
 }
+# Native GetWeaponPieces selects a non-hidden piece for every represented type.
+# Its final Enumerable.First throws during new-campaign town orders otherwise.
+foreach ($type in $template.PieceDatas.PieceData.piece_type) {
+    $eligible = @($pieces | Where-Object { $_.piece_type -eq $type -and $_.id -in $template.UsablePieces.UsablePiece.piece_id -and $_.GetAttribute('is_hidden') -ne 'true' })
+    if ($eligible.Count -eq 0) { throw "Town-order generation requires a visible piece for $type." }
+}
 $stats = (Read-Xml (Join-Path $ModulePath 'ModuleData/weapon_stats.xml')).DocumentElement
 if ($stats.Name -ne 'DragonslayerStats') { throw 'Invalid stats root.' }
 foreach ($name in 'swingDamage','thrustDamage','swingSpeed','thrustSpeed','handling') {

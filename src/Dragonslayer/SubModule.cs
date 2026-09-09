@@ -18,7 +18,7 @@ namespace Dragonslayer
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
-            Diagnostics.Write("Loaded Dragonslayer 0.1.0; target v1.4.8. Commands: dragonslayer.give, dragonslayer.status");
+            Diagnostics.Write("Loaded Dragonslayer 0.1.1; target v1.4.8. Commands: dragonslayer.give, dragonslayer.status");
         }
 
         public override void OnGameInitializationFinished(Game game)

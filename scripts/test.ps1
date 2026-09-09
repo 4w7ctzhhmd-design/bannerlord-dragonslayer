@@ -50,4 +50,11 @@ $xml.WeaponDescriptions.WeaponDescription.AvailablePieces.AvailablePiece[0].id =
 $xml.Save($descriptionPath)
 Expect-Failure { & "$PSScriptRoot/validate.ps1" -ModulePath $validation } 'must allow every selected piece'
 Write-Host 'PASS: crafted weapon description eligibility regression.'
+Copy-Item "$script:RepoRoot/Modules/Dragonslayer/ModuleData/dragonslayer_descriptions.xml" $descriptionPath -Force
+$piecesPath = "$validation/ModuleData/dragonslayer_pieces.xml"
+$xml = Read-Xml $piecesPath
+$xml.CraftingPieces.CraftingPiece[0].SetAttribute('is_hidden', 'true')
+$xml.Save($piecesPath)
+Expect-Failure { & "$PSScriptRoot/validate.ps1" -ModulePath $validation } 'Town-order generation requires a visible piece'
+Write-Host 'PASS: hidden crafting piece new-campaign crash regression.'
 Write-Host "Test fixtures retained in $temp"

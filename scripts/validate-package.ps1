@@ -1,6 +1,6 @@
 param([string]$PackagePath)
 . "$PSScriptRoot/common.ps1"
-if (!$PackagePath) { $PackagePath = Join-Path $script:RepoRoot 'artifacts/Dragonslayer-0.1.0-Custom-v1.4.8.zip' }
+if (!$PackagePath) { $PackagePath = Join-Path $script:RepoRoot 'artifacts/Dragonslayer-0.1.1-Custom-v1.4.8.zip' }
 $temp = Join-Path $script:RepoRoot ('artifacts/package-check-' + [Guid]::NewGuid().ToString('N'))
 Expand-Archive -LiteralPath $PackagePath -DestinationPath $temp
 $module = Join-Path $temp 'Modules/Dragonslayer'
