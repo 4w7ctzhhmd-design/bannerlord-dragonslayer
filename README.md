@@ -8,6 +8,7 @@ An original Berserk-inspired sword mod for **Bannerlord v1.4.8.119303**, Windows
 
 ## Features
 
+- [Guts Powers — Phase 1](docs/GUTS_POWERS.md): separate optional, configurable active-wielder strength/handling, shield pressure and poise. Disable the Instant Kill add-on when testing this mortal-swordsman mode. Later phases are not yet implemented.
 - Optional [Instant Kill add-on](docs/INSTANT_KILL.md), packaged separately. The original working sword is preserved at source tag `dragonslayer-standalone-v0.1.1` and in its standalone ZIP; enabling the add-on is optional.
 - New item `dragonslayer`, four mod-owned crafting pieces and a private template. No native item/asset replacement.
 - Normal native two-handed sword animations, blocking, swings and thrusts. No one-handed usage.

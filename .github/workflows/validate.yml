@@ -31,3 +31,8 @@ jobs:
       - name: Validate optional add-on registration
         shell: pwsh
         run: ./scripts/validate-instant-kill.ps1
+      - name: Validate Phase 1 registration
+        shell: pwsh
+        run: ./scripts/validate-guts-powers.ps1
+      - name: Test Phase 1 configuration and wielding policy (no game references)
+        run: dotnet run --project tests/GutsPhase1 -- Modules/DragonslayerGutsPowers/ModuleData/guts_config.xml

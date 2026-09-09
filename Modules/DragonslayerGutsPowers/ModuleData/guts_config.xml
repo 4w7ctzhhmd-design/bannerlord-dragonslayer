@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DragonslayerGutsConfig EnableGutsPowers="true" PlayerOnly="false" DebugLogging="true"
+  StrengthMultiplier="1.25" SwingSpeedBonus="0.45" HandlingBonus="0.35"
+  ShieldDamageMultiplier="2.5" StaggerPowerMultiplier="1.5"
+  PoiseMultiplier="1.6" AttackPoiseMultiplier="2.2" PoiseMaxIncomingDamage="35"
+  KnockbackResistanceBonus="0.15" />
