@@ -1,11 +1,14 @@
-param([string]$GamePath, [string]$ModulePath)
+param([string]$GamePath, [string]$ModulePath, [ValidateSet('Dragonslayer','DragonslayerInstantKill')][string]$ModuleId = 'Dragonslayer')
 . "$PSScriptRoot/common.ps1"
 $game = Find-Game $GamePath
-if (!$ModulePath) { $ModulePath = (Get-Content "$script:RepoRoot/artifacts/latest-build.txt" -Raw).Trim() }
+if (!$ModulePath) {
+    $latest = if ($ModuleId -eq 'Dragonslayer') { 'latest-build.txt' } else { 'latest-instant-kill.txt' }
+    $ModulePath = (Get-Content "$script:RepoRoot/artifacts/$latest" -Raw).Trim()
+}
 $source = (Resolve-Path -LiteralPath $ModulePath).Path
 $manifest = Get-Content (Join-Path $source '.dragonslayer-install.json') -Raw | ConvertFrom-Json
-if ($manifest.module -ne 'Dragonslayer' -or $manifest.target -ne (Get-Content "$script:RepoRoot/target-game.json" -Raw | ConvertFrom-Json).version) { throw 'Wrong package identity/version.' }
-$destination = [IO.Path]::GetFullPath((Join-Path $game 'Modules/Dragonslayer'))
+if ($manifest.module -ne $ModuleId -or $manifest.target -ne (Get-Content "$script:RepoRoot/target-game.json" -Raw | ConvertFrom-Json).version) { throw 'Wrong package identity/version.' }
+$destination = [IO.Path]::GetFullPath((Join-Path $game "Modules/$ModuleId"))
 Assert-NoLink $destination
 if (Test-Path $destination) { throw 'Dragonslayer folder already exists. Uninstall the previous managed build first, preserving edited/unrelated files.' }
 # Check every path and hash before creating the destination.
@@ -20,4 +23,4 @@ foreach ($file in $manifest.files) {
     Copy-Item -LiteralPath (Get-OwnedPath $source $file.path) -Destination $to
 }
 Copy-Item -LiteralPath (Join-Path $source '.dragonslayer-install.json') -Destination $destination
-Write-Host "Installed only $destination. Enable Dragonslayer after SandBox in the launcher."
+Write-Host "Installed only $destination. Enable $ModuleId after its dependencies in the launcher."

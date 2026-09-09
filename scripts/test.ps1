@@ -57,4 +57,11 @@ $xml.CraftingPieces.CraftingPiece[0].SetAttribute('is_hidden', 'true')
 $xml.Save($piecesPath)
 Expect-Failure { & "$PSScriptRoot/validate.ps1" -ModulePath $validation } 'Town-order generation requires a visible piece'
 Write-Host 'PASS: hidden crafting piece new-campaign crash regression.'
+$manifest.module = 'DragonslayerInstantKill'
+$manifest | ConvertTo-Json -Depth 4 | Set-Content "$payload/.dragonslayer-install.json"
+Expect-Failure { & "$PSScriptRoot/install.ps1" -GamePath $fixture -ModulePath $payload } 'Wrong package identity'
+& "$PSScriptRoot/install.ps1" -GamePath $fixture -ModulePath $payload -ModuleId DragonslayerInstantKill
+& "$PSScriptRoot/uninstall.ps1" -GamePath $fixture -ModuleId DragonslayerInstantKill
+if (!(Test-Path "$installed/unrelated.txt")) { throw 'Add-on uninstall modified the base mod.' }
+Write-Host 'PASS: add-on identity isolation and base mod preservation.'
 Write-Host "Test fixtures retained in $temp"

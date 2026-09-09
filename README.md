@@ -8,6 +8,7 @@ An original Berserk-inspired sword mod for **Bannerlord v1.4.8.119303**, Windows
 
 ## Features
 
+- Optional [Instant Kill add-on](docs/INSTANT_KILL.md), packaged separately. The original working sword is preserved at source tag `dragonslayer-standalone-v0.1.1` and in its standalone ZIP; enabling the add-on is optional.
 - New item `dragonslayer`, four mod-owned crafting pieces and a private template. No native item/asset replacement.
 - Normal native two-handed sword animations, blocking, swings and thrusts. No one-handed usage.
 - Long blade: 98.9 cm at 145% scale, about 143.4 cm before grip/assembly offsets. Native crafting determines final reach, weight and inertia; `dragonslayer.status` reports actual values.
@@ -34,7 +35,7 @@ Game detection reads Steam library folders. Override with `-GamePath 'X:/Games/M
 
 Builds go to `artifacts/build-<id>/Modules/Dragonslayer`; the default ZIP is **`artifacts/Dragonslayer-0.1.1-Custom-v1.4.8.zip`**. It includes mod DLLs, XML, original published assets/runtime data, installation hash manifest, documentation and source preview. Matching editor references trigger a second compilation and include `bin/Win64_Shipping_wEditor/Dragonslayer.dll`; the normal client uses its own `Win64_Shipping_Client` DLL. Game assemblies have `Private=false` and are never copied into source control or ZIPs. The source `Modules/Dragonslayer` folder is not itself compiled. `-Visual Prototype` explicitly builds the temporary native visual for troubleshooting.
 
-CI is **Source validation (no game compilation)**: XML relationships, configuration ranges, installer safety, asset script syntax and published asset checksums. It has no game references and does not compile the DLL, validate against native XSDs, or run Bannerlord. A green workflow is not a full mod build.
+CI is **Source validation (no game compilation)**: XML relationships, configuration ranges, installer safety, asset script syntax, published asset checksums and isolated instant-kill selection tests. Only the pure hit policy is compiled in CI; it has no game references and does not compile either mod DLL, validate against native XSDs, or run Bannerlord. A green workflow is not a full mod build.
 
 ## Installation and removal
 

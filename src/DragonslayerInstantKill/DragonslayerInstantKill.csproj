@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <AssemblyName>DragonslayerInstantKill</AssemblyName>
+    <RootNamespace>DragonslayerInstantKill</RootNamespace>
+    <Version>0.1.0</Version>
+    <Deterministic>true</Deterministic>
+    <AutomaticallyUseReferenceAssemblyPackages>false</AutomaticallyUseReferenceAssemblyPackages>
+    <GameConfiguration Condition="'$(GameConfiguration)' == ''">Win64_Shipping_Client</GameConfiguration>
+    <GameBin>$(GamePath)/bin/$(GameConfiguration)</GameBin>
+    <FrameworkPathOverride>$(GameBin)/mono/lib/mono/4.7.2-api</FrameworkPathOverride>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="TaleWorlds.DotNet"><HintPath>$(GameBin)/TaleWorlds.DotNet.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="netstandard"><HintPath>$(FrameworkPathOverride)/Facades/netstandard.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="TaleWorlds.Library"><HintPath>$(GameBin)/TaleWorlds.Library.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="TaleWorlds.Localization"><HintPath>$(GameBin)/TaleWorlds.Localization.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="TaleWorlds.ObjectSystem"><HintPath>$(GameBin)/TaleWorlds.ObjectSystem.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="TaleWorlds.Core"><HintPath>$(GameBin)/TaleWorlds.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="TaleWorlds.CampaignSystem"><HintPath>$(GameBin)/TaleWorlds.CampaignSystem.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="TaleWorlds.MountAndBlade"><HintPath>$(GameBin)/TaleWorlds.MountAndBlade.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+  <Target Name="RequireGame" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(GameBin)/TaleWorlds.Core.dll')" Text="Set GamePath to your local Bannerlord root, or use scripts/build.ps1." />
+  </Target>
+</Project>
+
