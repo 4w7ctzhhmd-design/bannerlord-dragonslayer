@@ -23,3 +23,11 @@ jobs:
         run: |
           $bad = git ls-files | Where-Object { $_ -match '(?i)(TaleWorlds.*\.dll|\.sav$|local.settings.json$|\.env$)' }
           if ($bad) { throw "Forbidden tracked files: $bad" }
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Test isolated hit policy (no game references)
+        run: dotnet run --project tests/InstantKillPolicy
+      - name: Validate optional add-on registration
+        shell: pwsh
+        run: ./scripts/validate-instant-kill.ps1

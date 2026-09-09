@@ -1,12 +1,12 @@
-param([string]$GamePath)
+param([string]$GamePath, [ValidateSet('Dragonslayer','DragonslayerInstantKill')][string]$ModuleId = 'Dragonslayer')
 . "$PSScriptRoot/common.ps1"
 $game = Find-Game $GamePath
-$destination = [IO.Path]::GetFullPath((Join-Path $game 'Modules/Dragonslayer'))
+$destination = [IO.Path]::GetFullPath((Join-Path $game "Modules/$ModuleId"))
 Assert-NoLink $destination
 if (!(Test-Path $destination)) { Write-Host 'Dragonslayer is not installed.'; return }
 $marker = Join-Path $destination '.dragonslayer-install.json'
 $manifest = Get-Content -LiteralPath $marker -Raw | ConvertFrom-Json
-if ($manifest.module -ne 'Dragonslayer') { throw 'Not a managed Dragonslayer installation.' }
+if ($manifest.module -ne $ModuleId) { throw 'Not a managed installation of the selected module.' }
 # Preflight all files: never erase user edits or follow links.
 $paths = @()
 foreach ($file in $manifest.files) {
@@ -25,4 +25,4 @@ Get-ChildItem -LiteralPath $destination -Directory -Recurse | Sort-Object { $_.F
     if (@(Get-ChildItem -LiteralPath $_.FullName -Force).Count -eq 0) { Remove-Item -LiteralPath $_.FullName }
 }
 if (@(Get-ChildItem -LiteralPath $destination -Force).Count -eq 0) { Remove-Item -LiteralPath $destination }
-Write-Host 'Removed managed Dragonslayer files. Unrelated files and all saves were preserved.'
+Write-Host "Removed managed $ModuleId files. Unrelated files and all saves were preserved."
